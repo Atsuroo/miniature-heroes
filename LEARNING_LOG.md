@@ -46,6 +46,7 @@ Project moved: now `C:\Godot_WorkSpace\miniature-heroes`, on the laptop, and the
 - **Two picking systems, two configuration mechanisms.** The raycast is configured in code (`collision_mask`, `exclude`); physics picking is configured per body in the inspector (`input_ray_pickable`) and knows no mask. They coexist peacefully now, but for Miniature Heroes only one survives — and the raycast already sees everything the other one does, it just stays quiet about cubes.
 - **The frame gap between click and camera transform is still there.** Buffering the finished `from`/`to` instead of the event moves the question rather than answering it: the ray is built in the input frame from the camera's *then* transform, and the camera hangs off a body that moves every physics frame.
 - Screen-edge clicks tested and correct. Shallow-angle clicks far across the 100×100 floor are the one case not checked — that one is a `RAY_LENGTH` question rather than a projection question.
+- Small things that went in with the commit on purpose, not overlooked: the old `to == Vector3.ZERO` still sits in the `_unhandled_input` guard next to `is_click_pending` (redundant, always in sync, so harmless today), `player_collison_rid` is missing an `i`, and the occluder intent behind `FLOOR_LAYER | CUBE_LAYER` is still not written down anywhere — that last one is the only decision in the file a reader can't reconstruct.
 
 **Next:** step 1.1 — real project, folder structure, strict mode, GUT, and the formatter/linter tooling (`gdtoolkit`, needs a Python install first) in one go.
 
