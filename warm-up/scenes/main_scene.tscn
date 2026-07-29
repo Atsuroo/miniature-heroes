@@ -5,6 +5,8 @@
 [ext_resource type="Script" uid="uid://iketp8grvsce" path="res://scripts/cube_spawner.gd" id="3_gubc5"]
 [ext_resource type="Script" uid="uid://bvg23skbvrv44" path="res://scripts/cube_manager.gd" id="3_rt2n2"]
 [ext_resource type="Script" uid="uid://jgbdipcse135" path="res://scripts/cube_selector.gd" id="4_pu3yx"]
+[ext_resource type="PackedScene" uid="uid://bru6rbjp84uoh" path="res://scenes/raycast_manager.tscn" id="6_rt2n2"]
+[ext_resource type="PackedScene" uid="uid://bnpn5bix8pp4b" path="res://scenes/selection_manager.tscn" id="7_c16ls"]
 
 [node name="Node3D" type="Node3D" unique_id=1803292521]
 
@@ -16,13 +18,22 @@ shadow_enabled = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
 
 [node name="PlayerCube" parent="." unique_id=2003670888 instance=ExtResource("2_7ykc4")]
+collision_layer = 4
+collision_mask = 3
 
-[node name="CubeManager" type="Node" parent="." unique_id=1706619694]
+[node name="SelectionManager" parent="." unique_id=2104093331 instance=ExtResource("7_c16ls")]
+
+[node name="CubeManager" type="Node" parent="SelectionManager" unique_id=1706619694]
 script = ExtResource("3_rt2n2")
 cube_amount = 5
 
-[node name="CubeSelector" type="Node" parent="CubeManager" unique_id=2018740072]
+[node name="CubeSelector" type="Node" parent="SelectionManager/CubeManager" unique_id=2018740072]
 script = ExtResource("4_pu3yx")
 
-[node name="CubeSpawner" type="Node" parent="CubeManager" unique_id=1684409702]
+[node name="CubeSpawner" type="Node" parent="SelectionManager/CubeManager" unique_id=1684409702]
 script = ExtResource("3_gubc5")
+
+[node name="RaycastManager" parent="SelectionManager" unique_id=1924431314 node_paths=PackedStringArray("player_collision") instance=ExtResource("6_rt2n2")]
+player_collision = NodePath("../../PlayerCube")
+
+[editable path="PlayerCube"]

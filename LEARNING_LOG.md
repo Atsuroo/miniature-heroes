@@ -14,6 +14,43 @@ Template:
 
 ---
 
+## 2026-07-29 (third session) — Step 0.3, picking rebuilt
+
+Project moved: now `C:\Godot_WorkSpace\miniature-heroes`, on the laptop, and the warm-up lives at `warm-up/` **inside the git repo** — no longer the throwaway outside version control that the earlier entries describe.
+
+**Did:** Rebuilt picking end to end. `camera_3d.gd` is gone; picking now lives in `RaycastManager`, its own scene, which finds the camera through `get_viewport().get_camera_3d()` and emits `world_position_clicked(position)`. `Cube` still emits `clicked(self)` through `_input_event`, `CubeManager` forwards it as `cube_clicked`, and a new `SelectionManager` sits above both and holds the result. Named the collision layers in project settings (floor / cube / player), put cubes on layer 2, excluded the player body from the query by RID, and filtered hits by layer. `RayIntersectionResult` got a required-key check, a real default for `face_index`, and `_to_string()`.
+
+**Learned:**
+
+- **Physics object picking is not part of the input pass.** `_input_event` looks like an input callback but is driven by `Viewport.physics_object_picking` and processed in the physics frame, *after* `_unhandled_input` has already run for that event. Which means `set_input_as_handled()` in `_input_event` suppresses nothing — it only ever works forward, never retroactively. Spent a while assuming the problem was that both nodes sat at the same depth in the tree. It was never hierarchy, it was time.
+- **`_unhandled_input` propagates in reverse tree order**, not top-down. Worth knowing before relying on who-runs-first.
+- **Removing a race beats winning one.** Both suppressing and arbitrating in `SelectionManager` would have depended on ordering — the exact thing that had just broken. Making the two systems answer *disjoint* questions (raycast → floor only, picking → cubes only) means ordering can't matter. That's the durable fix.
+- **Mask and filter are two different questions.** `collision_mask` says what *blocks* the ray; the check on the result says what I *react to*. Cubes are in the mask on purpose — as occluders, so a cube swallows the click instead of the ray passing through it and reporting the floor behind. The two sets falling apart is the normal case, not a contradiction.
+- **`collision_layer` is a bitmask, not a layer index.** `== FLOOR_LAYER` asks "is on exactly and only this layer"; the question I wanted was "is on this layer among others", which is a bitwise `&` against zero. Worked only because every body currently sits on exactly one layer — the failure mode would have been silence, not an error.
+- **`project_ray_origin()` on a perspective camera just returns the camera position** — nothing is computed, every pixel gets the same origin, and the fan-out *is* the perspective. This closes the question parked two entries ago: the reason the API hands back an origin at all is orthographic cameras, where the per-pixel variation lives in the origin and the direction is constant instead. The two camera types split the pixel dependency across opposite halves of the same pair.
+- **The click is a `Vector2`.** 2D in, 3D out is the entire job — the camera projection maps the pixel onto a point on the near-plane rectangle, and eye → that point is the direction `project_ray_normal()` returns.
+- **`intersect_ray` takes a segment, not an infinite ray.** That's why a length has to be picked, and why something past `RAY_LENGTH` is simply not clickable.
+
+**Confused me:**
+
+- Read "both nodes are on the same level" into a problem that was purely about *when* things run. The fix for the misconception was one `print` with `Engine.get_physics_frames()`.
+- Writing the [EXPLAIN] I described the screen click as a 3D position — which quietly skips the step the explanation is supposed to cover. The chain was otherwise right.
+- Godot has no built-in GDScript formatter (I went looking for one on a wrong hint). `gdformat`/`gdlint` are external, from the Python package `gdtoolkit` — parked for step 1.1 along with the rest of the tooling.
+
+**Found in review, not by me:** the bitmask equality above; `push_error` fired on a click into empty space, which is a normal outcome and not an error; a `set_input_as_handled()` left in `Cube` after it had been established that it can't work there.
+
+**Would do differently:** Decide *what an empty result means* before wiring an error path to it. The `push_error` on a miss was written reflexively at the same moment the `null` return was added, and the two are not the same case — no hit is ordinary, a malformed hit is not.
+
+**Open / deliberately parked:**
+
+- **Two picking systems, two configuration mechanisms.** The raycast is configured in code (`collision_mask`, `exclude`); physics picking is configured per body in the inspector (`input_ray_pickable`) and knows no mask. They coexist peacefully now, but for Miniature Heroes only one survives — and the raycast already sees everything the other one does, it just stays quiet about cubes.
+- **The frame gap between click and camera transform is still there.** Buffering the finished `from`/`to` instead of the event moves the question rather than answering it: the ray is built in the input frame from the camera's *then* transform, and the camera hangs off a body that moves every physics frame.
+- Screen-edge clicks tested and correct. Shallow-angle clicks far across the 100×100 floor are the one case not checked — that one is a `RAY_LENGTH` question rather than a projection question.
+
+**Next:** step 1.1 — real project, folder structure, strict mode, GUT, and the formatter/linter tooling (`gdtoolkit`, needs a Python install first) in one go.
+
+---
+
 ## 2026-07-29 — Step 0.2 closed (code review session)
 
 Project: `C:\Users\Atsuro\Documents\godot-warm-up`.

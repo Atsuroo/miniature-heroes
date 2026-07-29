@@ -48,6 +48,12 @@ player_jump={
 ]
 }
 
+[layer_names]
+
+3d_physics/layer_1="floor"
+3d_physics/layer_2="cube"
+3d_physics/layer_3="player"
+
 [physics]
 
 3d/physics_engine="Jolt Physics"

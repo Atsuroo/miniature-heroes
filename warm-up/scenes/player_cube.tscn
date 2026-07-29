@@ -1,7 +1,6 @@
 [gd_scene format=3 uid="uid://dujnsvphnbmn8"]
 
 [ext_resource type="Script" uid="uid://dihne4olnh5oj" path="res://scripts/player_cube.gd" id="1_0eg5c"]
-[ext_resource type="Script" uid="uid://cos5q1505i6eh" path="res://scripts/camera_3d.gd" id="2_unpp5"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_616w7"]
 
@@ -18,4 +17,3 @@ mesh = SubResource("BoxMesh_616w7")
 
 [node name="Camera3D" type="Camera3D" parent="." unique_id=1104479555]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.058637857, 0.8230115, 1.5962954)
-script = ExtResource("2_unpp5")

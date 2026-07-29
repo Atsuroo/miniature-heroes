@@ -7,9 +7,19 @@ var collider: Object
 var collider_id: int
 var rid: RID
 var shape: int
-var metadata: Variant
+var face_index: int
+const REQUIRED:Array[String] = ["position", "normal", "collider", "collider_id", "rid", "shape"]
+
+
 
 static func from_dict(d: Dictionary) -> RayIntersectionResult:
+
+
+	for key in REQUIRED:
+		if not d.has(key):
+			push_error("RayIntersectionResult missing key: %s" % key)
+			return null
+
 	var r := RayIntersectionResult.new()
 	r.position = d.get("position")
 	r.normal = d.get("normal")
@@ -17,10 +27,10 @@ static func from_dict(d: Dictionary) -> RayIntersectionResult:
 	r.collider_id = d.get("collider_id")
 	r.rid = d.get("rid")
 	r.shape = d.get("shape")
-	r.metadata = d.get("metadata")
+	r.face_index = d.get("face_index",-1)
 	return r
 
-func to_custom_string() -> String:
-	return "RayIntersectionResult(position=%s, normal=%s, collider=%s, collider_id=%s, rid=%s, shape=%s, metadata=%s)" % [
-		position, normal, collider, collider_id, rid, shape, metadata
+func _to_string() -> String:
+	return "RayIntersectionResult(position=%s, normal=%s, collider=%s, collider_id=%s, rid=%s, shape=%s, face_index=%s)" % [
+		position, normal, collider, collider_id, rid, shape, face_index
 	]
