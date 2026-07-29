@@ -1,0 +1,17 @@
+[gd_scene format=3 uid="uid://beaytxbpysd03"]
+
+[ext_resource type="Script" uid="uid://cmqbm3bduopni" path="res://scripts/cube.gd" id="1_7ufek"]
+[ext_resource type="BoxMesh" uid="uid://5wypappn8fr2" path="res://resources/box_mesh_basic.tres" id="2_8viuf"]
+[ext_resource type="Material" uid="uid://cgqkfqyjh00uv" path="res://resources/material/box_alt_material.tres" id="2_i7q2r"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_616w7"]
+
+[node name="Cube" type="RigidBody3D" unique_id=1734216093]
+script = ExtResource("1_7ufek")
+highlight_material = ExtResource("2_i7q2r")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1266198704]
+shape = SubResource("BoxShape3D_616w7")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1007077292]
+mesh = ExtResource("2_8viuf")
