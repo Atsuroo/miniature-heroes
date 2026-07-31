@@ -11,7 +11,16 @@ Template:
 **Confused me:**
 **Would do differently:**
 ```
+---
+## 2026-07-30/31 (fourth/fifth session) — Step 1.0 -1.2,Setup Hex coordinates
 
+**Did:** Project Setup with proper structure and settings to prevent my reoccurring untyped issues.
+Read https://www.redblobgames.com/grids/hexagons for a better understanding of hex math. Implemented a part of the presented hex math to run against test cases.
+
+**Learned:**:
+Offset vs cube vs axial coordinates with their different advantages/disadvantages, can be reread on the given block. 
+
+**Confused me:** Typed function variants, used them incorrectly and made a working code actually worse just to not use the variant version	
 ---
 
 ## 2026-07-29 (third session) — Step 0.3, picking rebuilt
