@@ -382,6 +382,15 @@ func test_spiral_zero_is_just_the_centre() -> void:
 	assert_eq(Hex.spiral(Vector2i(7, 7), 0), expected)
 
 
+func test_spiral_negative_radius_is_empty() -> void:
+	# Must agree with ring() and hexes_in_range(): a negative radius is not a
+	# radius of zero. Movement ranges get computed as subtractions and will go
+	# negative, and the three functions must not disagree about what that means.
+	var expected: Array[Vector2i] = []
+	assert_eq(Hex.spiral(Vector2i(0, 0), -1), expected)
+	assert_eq(Hex.spiral(Vector2i(3, -2), -4), expected)
+
+
 func test_spiral_starts_at_the_centre() -> void:
 	var centre := Vector2i(-1, 5)
 	var found: Array[Vector2i] = Hex.spiral(centre, 4)
