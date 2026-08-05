@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="HexSettingsType" format=3 uid="uid://bd0x5y3ybicac"]
+
+[ext_resource type="Script" uid="uid://uurlynfktglh" path="res://view/scripts/hex_settings_type.gd" id="1_ds7dx"]
+
+[resource]
+script = ExtResource("1_ds7dx")
+border_thickness_scaling = 0.05
+border_height_scaling = 0.5
+metadata/_custom_type_script = "uid://uurlynfktglh"

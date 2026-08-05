@@ -1,0 +1,37 @@
+[gd_scene format=3 uid="uid://b1bho1kqvxuty"]
+
+[ext_resource type="CylinderMesh" uid="uid://dajy60fclb5oi" path="res://view/mesh/hexagon_mesh.tres" id="1_dom3q"]
+[ext_resource type="Script" uid="uid://dderkgd3b6vjp" path="res://view/scripts/hexagon_mesh.gd" id="2_dom3q"]
+[ext_resource type="CylinderMesh" uid="uid://dcy6jtnsclpb7" path="res://view/mesh/hexagon_border_mesh.tres" id="3_dom3q"]
+
+[node name="HexagoneMesh" type="MeshInstance3D" unique_id=1797492384 node_paths=PackedStringArray("label_x", "label_y", "label_z")]
+mesh = ExtResource("1_dom3q")
+script = ExtResource("2_dom3q")
+label_x = NodePath("LabelX")
+label_y = NodePath("LabelY")
+label_z = NodePath("LabelZ")
+
+[node name="LabelX" type="Label3D" parent="." unique_id=1310811273]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0.44469386, 0.6882902, 0)
+billboard = 1
+modulate = Color(1, 0.15294118, 0.28235295, 1)
+text = "X
+"
+
+[node name="LabelY" type="Label3D" parent="." unique_id=1993654558]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, -0.30113542, 0.58735806, 0.46003866)
+billboard = 1
+modulate = Color(0.44091454, 0.5984442, 0.15306202, 1)
+text = "Y
+"
+
+[node name="LabelZ" type="Label3D" parent="." unique_id=345142944]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, -0.29329818, 0.57182235, -0.52136487)
+billboard = 1
+modulate = Color(0.2885608, 0.53969926, 0.96642333, 1)
+text = "Z
+
+"
+
+[node name="Border" type="MeshInstance3D" parent="." unique_id=579794068]
+mesh = ExtResource("3_dom3q")

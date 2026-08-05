@@ -156,9 +156,12 @@ A useful smell test: **if `logic/` can't be tested without opening a window, som
 
 - [ ] **Goal:** See the board.
 - [ ] **Learn first:** Hex layout math (same Red Blob page, "hex to pixel"). Pointy-top vs flat-top — pick one and write it down, because mixing them produces subtly wrong layouts that are miserable to debug. `MeshInstance3D`, `Node3D` transforms. Skim `MultiMeshInstance3D` and note it as an optimisation for later, not now.
-- [ ] **Build:** Generate a 9×9 hex board of flat tiles from the coordinate data.
-- [ ] **Done when:** A hex grid renders in 3D with no gaps or overlaps, and the mapping from `HexCoord` to world position lives in the view layer.
-- [ ] **Traps:** Hardcoding the hex size constant in six places. One source of truth.
+- [ ] **Decided before building — orientation: pointy-top.** The aesthetic argument does not apply here: with the orbiting camera from 1.4, rotating the view by 30° turns one orientation into the look of the other, so visually the choice is moot. It is fixed anyway because **1.5 must assume the same orientation as 1.3** — a mismatch between `hex → world` and `world → hex` does not crash, it just picks the wrong tile near the edges, which reads like a rounding bug and isn't one. Pointy-top specifically because it is the variant most references show, so there is less risk of mistranscribing the basis vectors.
+- [ ] **Decided before building — map shape: hexagonal, not rectangular.** In axial coordinates `q ∈ 0..8, r ∈ 0..8` is a rhombus, not a square; a rectangular board needs a per-row offset. A hex-shaped map avoids that entirely and is the better board for cover and approach lanes anyway. `Hex.hexes_in_range(Vector2i.ZERO, 5)` yields the map directly — 91 tiles, the same order of magnitude as the 81 the "9×9" below was reaching for. **`logic/` supplies the map shape, `view/` turns it into geometry.**
+- [ ] **Build:** Generate a 9×9 hex board of flat tiles from the coordinate data. *Superseded by the line above: radius-5 hexagonal map.*
+- [ ] **Done when:** A hex grid renders in 3D with no gaps or overlaps, and the mapping from `Hex` coordinates (`Vector2i`) to world position lives in the view layer.
+- [ ] **Traps:** Hardcoding the hex size constant in six places. One source of truth. *The orientation and the axis mapping belong at that same single place: the board lies on the **X/Z plane**, because `Y` carries the height levels from 1.6. Red Blob's formulas produce a 2D `(x, y)` — that `y` becomes `z` here, and that substitution is made once, in writing, not per call site.*
+- [ ] **Trap that follows from the orbiting camera:** nothing in the view may assume a fixed viewing direction. The first case is the debug labels that show `(q, r)` per tile — worth building, but flat text on a tile is mirrored and upside down from half of all camera angles. `Label3D`/`Sprite3D` have a billboard mode for exactly this. The distinction to keep: elements that describe something *for the viewer* get billboarded, elements that describe something *about the world* — a facing arrow, say — must not.
 
 ### Step 1.4 — Camera rig
 
