@@ -12,6 +12,16 @@ Template:
 **Would do differently:**
 ```
 ---
+## 2026-08-05(sixth session) — Step 1.3,Setup Rendering the grid
+
+**Did:** Generate Grid with correct visuals and scaling
+
+**Learned:**:
+
+
+**Confused me:** Scaling, set in different spaces and not consistently. For example text floating above mesh the height difference came from the scene, setting a manual value. The scale applied changed this to an inconsistency, for example scene 0.2 height, height scale (also apllied to mesh) 0.2 -> text 0.04 above mesh instead of a consistent relation	
+---
+
 ## 2026-07-30/31 (fourth/fifth session) — Step 1.0 -1.2,Setup Hex coordinates
 
 **Did:** Project Setup with proper structure and settings to prevent my reoccurring untyped issues.
