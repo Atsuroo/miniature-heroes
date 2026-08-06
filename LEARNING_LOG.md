@@ -12,6 +12,16 @@ Template:
 **Would do differently:**
 ```
 ---
+## 2026-08-06(seventh session) — Step 1.4 Camera rig
+
+**Did:** Added a moving Camera
+
+**Learned:**: gimbal pattern, camera attached to two nodes working as axes to run instead of the camera. camera child of inner , which is child of outer gimbal.
+
+
+**Confused me:** when to apply delta, (belongs to rates, not to amounts). Need to pay attention to when input is handled
+---
+
 ## 2026-08-05(sixth session) — Step 1.3,Setup Rendering the grid
 
 **Did:** Generate Grid with correct visuals and scaling

@@ -165,13 +165,17 @@ A useful smell test: **if `logic/` can't be tested without opening a window, som
 
 > **The lesson was *where* a size is applied, not which.** The same mistake appeared three times in a row and looked different every time: mesh height times node scale, then resource size times node scale, then label and border offsets tuned against the doubled transform. Each was invisible while the value in play happened to be `1.0`, and each surfaced only in the one dimension where it wasn't — `tile_height = 0.2` rendering as `0.04`. The billboarded labels were the tell: node scale is inherited by every descendant, so a non-uniform scale on the tile squashed the debug text, and billboarding could not undo it because it only touches rotation. The resolution each time was the same shape as the "one source of truth" trap, one level down: **one source, and one place where it is applied.**
 
-### Step 1.4 — Camera rig
+### Step 1.4 — Camera rig ✅ *done 2026-08-06*
 
-- [ ] **Goal:** An orbit camera that looks at the board.
-- [ ] **Learn first:** The gimbal pattern — a pivot `Node3D` at the focus point, a second node for elevation, `Camera3D` as a child offset backwards. Rotate the pivots, never the camera itself. Also look at `Tween` / `lerp` for smoothing.
-- [ ] **Build:** Mouse-drag orbits, wheel zooms, WASD or edge-scroll pans.
-- [ ] **Done when:** You can look at the board from any angle without gimbal weirdness or the camera rolling.
-- [ ] **Traps:** Directly setting `camera.rotation` — this is the classic mistake and it produces exactly the "why is my camera tilting sideways" bug. Use the rig.
+- [x] **Goal:** An orbit camera that looks at the board.
+- [x] **Learn first:** The gimbal pattern — a pivot `Node3D` at the focus point, a second node for elevation, `Camera3D` as a child offset backwards. Rotate the pivots, never the camera itself. Also look at `Tween` / `lerp` for smoothing. *The reason the rule "never rotate the camera" earns its place: a camera at `(0, 0, d)` with identity rotation aims at its parent's origin for **every** pitch and **every** distance, so "look at the focus point" never has to be computed. A first attempt gave the camera its own ~25° tilt and lifted the pivot 6 units into the air — the camera then orbited a point in mid-air and aimed past it, and zoom slid sideways instead of away, because the inner gimbal's Z was still horizontal.*
+- [x] **Build:** Mouse-drag orbits, wheel zooms, WASD or edge-scroll pans. *WASD. Edge-scroll deliberately skipped — it is the same pan maths behind a different input source, no new engine content, and whether it feels good is a question for playtesting.*
+- [x] **Done when:** You can look at the board from any angle without gimbal weirdness or the camera rolling. *Rolling is structurally impossible here: no node rotates about Z, and the outer gimbal is never pitched. Pitch is clamped to a range that stays above the board — symmetric limits around the horizontal would let the camera go underneath it.*
+- [x] **Traps:** Directly setting `camera.rotation` — this is the classic mistake and it produces exactly the "why is my camera tilting sideways" bug. Use the rig.
+
+> **`delta` belongs to rates, not to amounts.** Mouse look was multiplied by `delta` at first, which makes sensitivity depend on framerate — the same physical sweep turns half as far at 120 fps as at 60. `InputEventMouseMotion.relative` is already an amount: pixels moved since the last event. A held key or a stick is a *state*, and turning that into motion is what `delta` is for. Both cases now sit in the same script, which is why the two speed constants cannot share a value: one is radians per second, the other radians per pixel.
+
+> **Second lesson, same shape as 1.3's:** `_unhandled_input` runs once per **event**, not once per frame, while `Input.is_action_just_pressed()` is true for the whole **frame**. Polling the singleton inside the event callback therefore fires once per event — and a mouse wheel tick emits both a press and a release in one frame, so every zoom happened twice. Assigning instead of accumulating hid the symptom without fixing anything; it only meant two identical writes. The same wrong assumption — "one event per frame" — was quietly losing mouse-motion events for the rotation at the same time.
 
 ### Step 1.5 — Click a hex **[REVIEW]**
 
