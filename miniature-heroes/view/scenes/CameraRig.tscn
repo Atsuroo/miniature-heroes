@@ -1,0 +1,13 @@
+[gd_scene format=3 uid="uid://c31osto2bitno"]
+
+[ext_resource type="Script" uid="uid://bry7e2gmnnjf5" path="res://view/scripts/camera_rig.gd" id="1_h2a7x"]
+
+[node name="CameraRig" type="Node3D" unique_id=745382884 node_paths=PackedStringArray("inner_gimbal", "camera")]
+script = ExtResource("1_h2a7x")
+inner_gimbal = NodePath("InnerGimbal")
+camera = NodePath("InnerGimbal/Camera3D")
+
+[node name="InnerGimbal" type="Node3D" parent="." unique_id=2083541328]
+
+[node name="Camera3D" type="Camera3D" parent="InnerGimbal" unique_id=1653820913]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.23544884)
