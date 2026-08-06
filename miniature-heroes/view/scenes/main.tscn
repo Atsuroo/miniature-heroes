@@ -1,0 +1,31 @@
+[gd_scene format=3 uid="uid://blxa2p57uscdy"]
+
+[ext_resource type="Script" uid="uid://wh81fuc3nhc2" path="res://view/scripts/grid_manager.gd" id="1_38h8k"]
+[ext_resource type="Resource" uid="uid://bd0x5y3ybicac" path="res://data/HexSettings.tres" id="2_nns27"]
+[ext_resource type="Script" uid="uid://bq2rqxnby00yq" path="res://view/scripts/grid_visual_manager.gd" id="3_rcvxv"]
+[ext_resource type="PackedScene" uid="uid://b1bho1kqvxuty" path="res://view/scenes/hexagon_mesh.tscn" id="4_tsi5v"]
+[ext_resource type="CylinderMesh" uid="uid://dajy60fclb5oi" path="res://view/mesh/hexagon_mesh.tres" id="5_c0wdj"]
+[ext_resource type="CylinderMesh" uid="uid://dcy6jtnsclpb7" path="res://view/mesh/hexagon_border_mesh.tres" id="6_8sgb6"]
+[ext_resource type="Script" uid="uid://5vacuu8tugg7" path="res://view/scripts/grid_hex_coord_manager.gd" id="7_24mx5"]
+[ext_resource type="PackedScene" uid="uid://c31osto2bitno" path="res://view/scenes/CameraRig.tscn" id="8_5bpn6"]
+
+[node name="Main" type="Node3D" unique_id=1798840683]
+
+[node name="GridManager" type="Node" parent="." unique_id=926162596]
+script = ExtResource("1_38h8k")
+settings = ExtResource("2_nns27")
+
+[node name="GridVisualManager" type="Node" parent="GridManager" unique_id=152439381]
+script = ExtResource("3_rcvxv")
+grid_mesh = ExtResource("4_tsi5v")
+mesh = ExtResource("5_c0wdj")
+border_mesh = ExtResource("6_8sgb6")
+
+[node name="GridHexCoordManager" type="Node" parent="GridManager" unique_id=417800840]
+script = ExtResource("7_24mx5")
+size = 5
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1710385749]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 9.891836, 0)
+
+[node name="CameraRig" parent="." unique_id=745382884 instance=ExtResource("8_5bpn6")]
