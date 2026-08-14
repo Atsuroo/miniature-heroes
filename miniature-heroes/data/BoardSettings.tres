@@ -1,0 +1,7 @@
+[gd_resource type="Resource" script_class="BoardSettingsType" format=3 uid="uid://cp0ravhrscfx3"]
+
+[ext_resource type="Script" uid="uid://djpfdexfsmi1v" path="res://view/scripts/dataTypes/board_settings_type.gd" id="1_qdkh4"]
+
+[resource]
+script = ExtResource("1_qdkh4")
+metadata/_custom_type_script = "uid://djpfdexfsmi1v"

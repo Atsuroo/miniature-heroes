@@ -12,6 +12,25 @@ Template:
 **Would do differently:**
 ```
 ---
+
+## 2026-08-14(eight session) — Step 1.4 Click a hex
+
+**Did:** Click to select or hover a tile, both shown as different statuses
+
+**Learned:**: for this amount of nodes it was way easier and better to just have a state of the board and to redraw it every time there is a change. also trying to apply logic to split hover and select was way more complicated to than to just apply both
+
+
+**Confused me:** using values instead of flags to check statuses!!!
+---
+
+## 2026-08-05(sixth session) — Step 1.3,Setup Rendering the grid
+
+**Did:** Generate Grid with correct visuals and scaling
+
+**Learned:**:
+
+
+
 ## 2026-08-06(seventh session) — Step 1.4 Camera rig
 
 **Did:** Added a moving Camera

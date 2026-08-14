@@ -3,13 +3,19 @@
 [ext_resource type="CylinderMesh" uid="uid://dajy60fclb5oi" path="res://view/mesh/hexagon_mesh.tres" id="1_dom3q"]
 [ext_resource type="Script" uid="uid://dderkgd3b6vjp" path="res://view/scripts/hexagon_mesh.gd" id="2_dom3q"]
 [ext_resource type="CylinderMesh" uid="uid://dcy6jtnsclpb7" path="res://view/mesh/hexagon_border_mesh.tres" id="3_dom3q"]
+[ext_resource type="CylinderMesh" uid="uid://yptatlf7e60p" path="res://view/mesh/hexagon_border_mesh_selected.tres" id="4_8r7to"]
+[ext_resource type="Shape3D" uid="uid://bli2uwfyhxooy" path="res://view/shape/tile_cylinder_shape.tres" id="4_fg8vk"]
+[ext_resource type="CylinderMesh" uid="uid://c7as7qsh3sdbx" path="res://view/mesh/hexagon_border_mesh_hovered.tres" id="5_4uyr3"]
 
-[node name="HexagoneMesh" type="MeshInstance3D" unique_id=1797492384 node_paths=PackedStringArray("label_x", "label_y", "label_z")]
+[node name="HexagoneMesh" type="MeshInstance3D" unique_id=1797492384 node_paths=PackedStringArray("label_x", "label_y", "label_z", "border", "border_hover", "border_select")]
 mesh = ExtResource("1_dom3q")
 script = ExtResource("2_dom3q")
 label_x = NodePath("LabelX")
 label_y = NodePath("LabelY")
 label_z = NodePath("LabelZ")
+border = NodePath("Border")
+border_hover = NodePath("Border_Hovered")
+border_select = NodePath("Border_Selected")
 
 [node name="LabelX" type="Label3D" parent="." unique_id=1310811273]
 transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0.44469386, 0.6882902, 0)
@@ -35,3 +41,16 @@ text = "Z
 
 [node name="Border" type="MeshInstance3D" parent="." unique_id=579794068]
 mesh = ExtResource("3_dom3q")
+
+[node name="Border_Selected" type="MeshInstance3D" parent="." unique_id=775046410]
+visible = false
+mesh = ExtResource("4_8r7to")
+
+[node name="Border_Hovered" type="MeshInstance3D" parent="." unique_id=583470805]
+visible = false
+mesh = ExtResource("5_4uyr3")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="." unique_id=1176334589]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D" unique_id=2005214343]
+shape = ExtResource("4_fg8vk")

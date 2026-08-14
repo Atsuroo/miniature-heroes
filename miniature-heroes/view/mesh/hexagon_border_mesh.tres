@@ -1,7 +1,7 @@
 [gd_resource type="CylinderMesh" format=3 uid="uid://dcy6jtnsclpb7"]
 
-[ext_resource type="Material" uid="uid://bd1mx1noqhkh5" path="res://view/material/hexagon_border_material.tres" id="1_8bity"]
+[ext_resource type="Material" uid="uid://chnawkwljrmye" path="res://view/material/hexagon_border_materia_highlightedl.tres" id="1_51uqk"]
 
 [resource]
-material = ExtResource("1_8bity")
+material = ExtResource("1_51uqk")
 radial_segments = 6

@@ -75,6 +75,11 @@ camera_rotate={
 ]
 }
 
+[layer_names]
+
+3d_physics/layer_1="tile"
+3d_physics/layer_2="mini"
+
 [physics]
 
 3d/physics_engine="Jolt Physics"
